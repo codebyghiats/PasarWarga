@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-28T02:33:00Z",
+  "title": "Design System: Pasar Warga",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Fresh Market Emerald",
+        "canonical": "#059669",
+        "tonalRamp": ["#022c22","#064e3b","#065f46","#047857","#059669","#10b981","#34d399","#6ee7b7","#a7f3d0","#d1fae5"]
+      },
+      "primary-deep": {
+        "role": "primary",
+        "displayName": "Deep Emerald",
+        "canonical": "#047857",
+        "tonalRamp": ["#022c22","#064e3b","#065f46","#047857","#059669","#10b981","#34d399","#6ee7b7","#a7f3d0","#d1fae5"]
+      },
+      "page-ground": {
+        "role": "neutral",
+        "displayName": "Page Ground",
+        "canonical": "#FAFAFA",
+        "tonalRamp": ["#111827","#374151","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F3F4F6","#F9FAFB","#FAFAFA","#FFFFFF"]
+      },
+      "card-surface": {
+        "role": "neutral",
+        "displayName": "Card Surface",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#111827","#374151","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F3F4F6","#F9FAFB","#FAFAFA","#FFFFFF"]
+      },
+      "primary-text": {
+        "role": "neutral",
+        "displayName": "Primary Text",
+        "canonical": "#111827",
+        "tonalRamp": ["#111827","#1F2937","#374151","#4B5563","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F9FAFB","#FFFFFF"]
+      },
+      "secondary-text": {
+        "role": "neutral",
+        "displayName": "Secondary Text",
+        "canonical": "#6B7280",
+        "tonalRamp": ["#111827","#1F2937","#374151","#4B5563","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F9FAFB","#FFFFFF"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border / Divider",
+        "canonical": "#E5E7EB",
+        "tonalRamp": ["#111827","#374151","#6B7280","#9CA3AF","#D1D5DB","#E5E7EB","#F3F4F6","#F9FAFB","#FAFAFA","#FFFFFF"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page-level hero headline. One per screen." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings like 'Produk Terbaru'." },
+      "title": { "displayName": "Title", "purpose": "Product and shop names inside cards." },
+      "body": { "displayName": "Body", "purpose": "Descriptions, form labels, general copy. 65-75ch max." },
+      "label": { "displayName": "Label", "purpose": "Pill text, badge labels, tab bar items." },
+      "price": { "displayName": "Price", "purpose": "Product prices in emerald. Rp format with dot separators." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)", "purpose": "All product and shop cards at rest." },
+      { "name": "card-hover", "value": "0 4px 12px rgba(0,0,0,0.12)", "purpose": "Card hover on desktop." },
+      { "name": "tab-bar", "value": "0 -1px 0 #E5E7EB", "purpose": "Single hairline above fixed bottom tab bar." },
+      { "name": "search-bar", "value": "0 1px 4px rgba(0,0,0,0.08)", "purpose": "Search input subtle lift." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for all state transitions." },
+      { "name": "ease-decelerate", "value": "cubic-bezier(0, 0, 0.2, 1)", "purpose": "Elements entering the screen (bottom sheets, modals)." },
+      { "name": "duration-fast", "value": "150ms", "purpose": "Button and chip state transitions." },
+      { "name": "duration-standard", "value": "250ms", "purpose": "Card hover, bottom sheet entry." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "390px" },
+      { "name": "tablet", "value": "768px" },
+      { "name": "desktop", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action: Tambah ke Keranjang, Pesan Sekarang, Checkout.",
+      "html": "<button class=\"ds-btn-primary\">Tambah ke Keranjang</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background: #059669; color: #ffffff; padding: 10px 20px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.4; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1), box-shadow 150ms cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover { background: #047857; box-shadow: 0 2px 8px rgba(5,150,105,0.25); } .ds-btn-primary:focus-visible { outline: 2px solid #059669; outline-offset: 2px; } .ds-btn-primary:active { background: #065f46; transform: translateY(1px); } .ds-btn-primary:disabled { background: #D1D5DB; color: #9CA3AF; cursor: not-allowed; box-shadow: none; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary actions: Hubungi WhatsApp, Lihat Semua.",
+      "html": "<button class=\"ds-btn-ghost\">Hubungi WhatsApp</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #059669; padding: 10px 20px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.4; border: 1.5px solid #059669; border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1), color 150ms; } .ds-btn-ghost:hover { background: #f0fdf4; } .ds-btn-ghost:focus-visible { outline: 2px solid #059669; outline-offset: 2px; } .ds-btn-ghost:active { background: #dcfce7; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "description": "Primary search bar on beranda and katalog pages.",
+      "html": "<div class=\"ds-search-wrap\"><svg class=\"ds-search-icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#6B7280\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.35-4.35\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Cari produk atau toko...\"/></div>",
+      "css": ".ds-search-wrap { position: relative; display: flex; align-items: center; } .ds-search-icon { position: absolute; left: 14px; pointer-events: none; flex-shrink: 0; } .ds-search-input { width: 100%; background: #F9FAFB; border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 11px 16px 11px 42px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 15px; font-weight: 400; color: #111827; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: border-color 150ms, box-shadow 150ms; outline: none; } .ds-search-input::placeholder { color: #9CA3AF; } .ds-search-input:focus { border-color: #059669; box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }"
+    },
+    {
+      "name": "Category Pill",
+      "kind": "chip",
+      "description": "Horizontal-scroll category filters on beranda and katalog.",
+      "html": "<div style=\"display:flex;gap:8px;\"><button class=\"ds-pill ds-pill--active\">Makanan</button><button class=\"ds-pill\">Minuman</button><button class=\"ds-pill\">Snack</button></div>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; white-space: nowrap; padding: 6px 14px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 13px; font-weight: 500; border-radius: 20px; border: 1.5px solid #E5E7EB; background: #FFFFFF; color: #374151; cursor: pointer; transition: all 150ms cubic-bezier(0.4,0,0.2,1); } .ds-pill:hover { border-color: #059669; color: #059669; } .ds-pill--active { background: #059669; color: #FFFFFF; border-color: #059669; } .ds-pill--active:hover { background: #047857; border-color: #047857; }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "description": "2-column grid card for product listings.",
+      "html": "<div class=\"ds-product-card\"><div class=\"ds-product-card__img\"></div><div class=\"ds-product-card__body\"><p class=\"ds-product-card__name\">Nasi Kuning Spesial</p><p class=\"ds-product-card__shop\">Warung Bu Sari</p><p class=\"ds-product-card__price\">Rp 15.000</p><button class=\"ds-btn-tambah\">+ Tambah</button></div></div>",
+      "css": ".ds-product-card { background: #FFFFFF; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 250ms cubic-bezier(0.4,0,0.2,1), transform 250ms; } .ds-product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-2px); } .ds-product-card__img { width: 100%; aspect-ratio: 4/3; background: #F3F4F6; object-fit: cover; } .ds-product-card__body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 2px; flex: 1; } .ds-product-card__name { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 13px; font-weight: 700; color: #111827; line-height: 1.4; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } .ds-product-card__shop { font-size: 11px; font-weight: 400; color: #6B7280; margin: 0; } .ds-product-card__price { font-size: 14px; font-weight: 700; color: #059669; margin: 4px 0 8px; } .ds-btn-tambah { width: 100%; background: #059669; color: #fff; border: none; border-radius: 6px; padding: 7px 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 150ms; } .ds-btn-tambah:hover { background: #047857; }"
+    },
+    {
+      "name": "Bottom Tab Bar",
+      "kind": "nav",
+      "description": "Fixed bottom navigation for all warga-facing mobile pages.",
+      "html": "<nav class=\"ds-tab-bar\"><a class=\"ds-tab-item ds-tab-item--active\" href=\"#\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z\"/></svg><span>Beranda</span></a><a class=\"ds-tab-item\" href=\"#\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"/></svg><span>Kategori</span></a><a class=\"ds-tab-item\" href=\"#\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z\"/><line x1=\"3\" y1=\"6\" x2=\"21\" y2=\"6\"/><path d=\"M16 10a4 4 0 0 1-8 0\"/></svg><span>Pesanan</span></a><a class=\"ds-tab-item\" href=\"#\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/></svg><span>Profil</span></a></nav>",
+      "css": ".ds-tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; background: #FFFFFF; box-shadow: 0 -1px 0 #E5E7EB; display: flex; align-items: stretch; z-index: 100; } .ds-tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: #9CA3AF; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 10px; font-weight: 500; transition: color 150ms; padding: 6px 0; } .ds-tab-item--active { color: #059669; } .ds-tab-item:hover { color: #059669; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clean Warung Counter",
+    "overview": "Pasar Warga is designed the way a well-run modern warung is arranged: everything you need is in front of you, uncluttered, immediately legible, with just enough warmth to remind you this is your neighborhood. The interface is a working tool, not a showroom. The palette is a committed emerald green on a near-white ground. Mobile is the primary scene.",
+    "keyCharacteristics": [
+      "Off-white (#FAFAFA) working surface; emerald (#059669) as the single committed accent",
+      "Generous vertical spacing; tight internal card padding",
+      "One font family (Plus Jakarta Sans), two weights (400 body, 700 headings)",
+      "Depth through subtle shadows, never decorative halos",
+      "Bottom tab navigation on mobile; no hamburger menus",
+      "Emerald used only for primary actions, active states, and prices"
+    ],
+    "rules": [
+      { "name": "The One Green Rule", "body": "Emerald (#059669) appears in exactly four contexts: primary action buttons, active state indicators, price text, and the wordmark. If a screen has emerald in a fifth place, remove it from the weakest one.", "section": "colors" },
+      { "name": "The White Card Rule", "body": "Product and shop cards are always pure white (#FFFFFF) on the #FAFAFA page ground. Never tint cards with the accent color; depth comes from the shadow, not from hue.", "section": "colors" },
+      { "name": "The No Uppercase Rule", "body": "Labels, pills, tab items, and section headers are sentence-case or title-case. Tracked uppercase is not part of this system.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. Shadows appear only on cards (always) and as state feedback (hover). No element has a shadow purely for decoration.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use emerald (#059669) for every primary action button.",
+      "Do show prices in emerald, formatted as 'Rp 15.000' with Indonesian thousand-separator dots.",
+      "Do use 2-column product grids on mobile and 4-column on desktop (>=768px).",
+      "Do keep card internal padding at 12px and section gaps at 24px.",
+      "Do use Plus Jakarta Sans 700 for all headings; 400 for body.",
+      "Do show the bottom tab bar on all mobile pages; never hide it during scroll."
+    ],
+    "donts": [
+      "Don't use emerald decoratively — backgrounds, borders, dividers, or illustrative elements are off-limits.",
+      "Don't use gradient text. Weight and size provide emphasis.",
+      "Don't use uppercase labels or tracked eyebrows above section headings.",
+      "Don't nest cards inside cards.",
+      "Don't use a hamburger menu on mobile. Navigation lives in the bottom tab bar.",
+      "Don't use glass/blur as decoration.",
+      "Don't animate product images on hover — animate the card container instead."
+    ]
+  }
+}

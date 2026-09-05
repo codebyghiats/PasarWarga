@@ -1,0 +1,114 @@
+{
+  "nama_aplikasi": "Pasar Warga",
+  "singkatan": "PW",
+  "deskripsi": "Direktori & marketplace hyperlocal yang menghubungkan warga dengan UMKM (usaha kecil) di sekitar tempat tinggal mereka.",
+  "filosofi": "Tokopedia/Shopee menjangkau seluruh Indonesia; Pasar Warga sengaja dibatasi hyperlocal sehingga pembeli menemukan penjual yang benar-benar dekat dengan rumahnya.",
+  "teknologi": {
+    "stack": ["Laravel", "MySQL", "Blade", "Tailwind CSS", "Vite", "Laravel Breeze"],
+    "database": "MySQL (partyasar_warga, charset utf8mb4)",
+    "hosting_rencana": "Google Cloud Compute Engine (e2-micro, Always Free)"
+  },
+  "roles": [
+    { "role": "admin", "deskripsi": "Pengelola platform", "hak_akses": ["Approve/reject registrasi toko", "Kelola kategori produk", "Kelola user"] },
+    { "role": "pemilik_toko", "deskripsi": "Pelaku UMKM / pemilik usaha", "hak_akses": ["Kelola profil toko", "Kelola produk", "Konfirmasi/tolak pesanan", "Lihat statistik toko"] },
+    { "role": "warga", "deskripsi": "Pembeli / pengguna umum", "hak_akses": ["Cari & lihat produk/toko", "Keranjang & checkout", "Hubungi penjual", "Simpan favorit"] },
+    { "role": "guest", "deskripsi": "Pengunjung belum login", "hak_akses": ["Baca katalog & detail produk/toko (read-only)"] }
+  ],
+
+  "pemetaan_role_ke_tabel_database": {
+    "admin": "Kolom users.role = 'admin'. Tidak memiliki relasi ke tabel toko.",
+    "pemilik_toko": "users.role = 'pemilik_toko'. Relasi users 1-1 tokos (seorang pemilik hanya punya 1 toko).",
+    "warga": "users.role = 'warga'. Membuat keranjangs, pesanans, ulasans, favorits.",
+    "guest": "Tidak ada baris di users. Hanya membaca tabel kategoris, tokos (status=approved), dan produks."
+  },
+
+  "modul_fitur": [
+    {
+      "modul": "1. Autentikasi & Role",
+      "fitur": [
+        { "fitur": "Register 2 jalur (Warga / Pemilik Usaha)", "tabel": "users", "hubungan_db": "Saat mendaftar sebagai pemilik usaha, users.role otomatis = 'pemilik_toko'; warga = 'warga'." },
+        { "fitur": "Login / logout", "tabel": "users, sessions", "hubungan_db": "Sesi tersimpan di tabel sessions (session_id tersimpan di cookie)." },
+        { "fitur": "Middleware berbasis role", "tabel": "users", "hubungan_db": "Cek kolom users.role sebelum mengizinkan akses route admin/pemilik_toko/warga." },
+        { "fitur": "Redirect dashboard sesuai role", "tabel": "users", "hubungan_db": "setelah login dibaca users.role lalu diarahkan ke dashboard masing-masing." }
+      ]
+    },
+    {
+      "modul": "2. Manajemen Toko",
+      "fitur": [
+        { "fitur": "Create/edit profil toko", "tabel": "tokos", "database_db": "CRUD kolom nama_toko, deskripsi, lokasi, no_wa, foto milik users (pemilik)." },
+        { "fitur": "Alur approval toko (pending → approved/rejected)", "tabel": "tokos", "database_db": "kolom tokos.status diubah oleh admin. Default 'pending' saat toko dibuat." },
+        { "fitur": "Toko pending disembunyikan dari katalog", "tabel": "tokos, produks", "database_db": "Query publik hanya menampilkan tokos yang status='approved'. Produk milik toko pending ikut tersembunyi." }
+      ]
+    },
+    {
+      "modul": "3. Manajemen Produk",
+      "fitur": [
+        { "fitur": "CRUD produk", "tabel": "produks", "database_db": "CRUD nama_produk, deskripsi, harga, stok, kategori, foto milik toko." },
+        { "fitur": "Produk terhubung ke toko & kategori", "tabel": "produks", "database_db": "produks.toko_id → tokos.id, produks.kategori_id → kategoris.id." },
+        { "fitur": "Sembunyikan produk tanpa hapus", "tabel": "produks", "database_db": "kolom is_aktif (boolean). Produk nonaktif disembunyikan dari katalog." }
+      ]
+    },
+    {
+      "modul": "4. Manajemen Kategori",
+      "fitur": [
+        { "fitur": "CRUD kategori (admin only)", "tabel": "kategoris", "database_db": "CRUD nama & slug kategori." }
+      ]
+    },
+    {
+      "modul": "5. Pencarian & Penemuan",
+      "fitur": [
+        { "fitur": "Search by nama produk / toko", "tabel": "produks, tokos", "database_db": "WHERE produks.nama_produk LIKE '%kata%' ATAU tokos.nama_toko LIKE '%kata%'." },
+        { "fitur": "Filter by kategori", "tabel": "kategoris, produks", "database_db": "WHERE produks.kategori_id = ?" },
+        { "fitur": "Filter by lokasi", "tabel": "tokos", "database_db": "WHERE tokos.lokasi = ? (kolom yang menyimpan kecamatan/kota)." },
+        { "fitur": "Filter by rentang harga", "tabel": "produks", "database_db": "WHERE produks.harga BETWEEN ? AND ?" }
+      ]
+    },
+    {
+      "modul": "6. Keranjang",
+      "fitur": [
+        { "fitur": "Tambah produk ke keranjang", "tabel": "keranjangs", "database_db": "INSERT keranjangs (user_id, produk_id, qty). Sudah ada? qty ditambah." },
+        { "fitur": "Ubah qty / hapus item keranjang", "tabel": "keranjangs", "database_db": "UPDATE/DELETE baris keranjangs. Unique(user_id, produk_id) mencegah duplikasi." }
+      ]
+    },
+    {
+      "modul": "7. Pesanan (Order di platform)",
+      "fitur": [
+        { "fitur": "Checkout & submit order", "tabel": "pesanans, pesanan_items", "database_db": "ISI pesanans (nama_penerima, alamat_pengiriman, catatan, total_harga) sekaligus menghitung dari keranjang lalu pindah ke pesanan_items." },
+        { "fitur": "Status pesanan (pending→confirmed/rejected→completed/cancelled)", "tabel": "pesanans", "database_db": "Update kolom pesanans.status." },
+        { "fitur": "Pembeli cek riwayat produk saat order", "tabel": "pesanan_items", "database_db": "nama_produk & harga_satuan disalin (snapshot) sehingga riwayat tetap akurat walau produk diubah/dihapus." },
+        { "fitur": "Kurangi stok saat order dikonfirmasi", "tabel": "produks, pesanan_items", "database_db": "produks.stok dikurangi sejumlah qty di pesanan_items." }
+      ]
+    },
+    {
+      "modul": "8. Kontak WhatsApp (channel tambahan)",
+      "fitur": [
+        { "fitur": "Tombol Hubungi via WhatsApp", "tabel": "tokos", "database_db": "Link wa.me/[62][tokos.no_wa]?text=pesan. WA merupakan kanal kontak suplemen, bukan jalur transaksi." }
+      ]
+    },
+    {
+      "modul": "9. Fitur Tambahan (Nice to Have)",
+      "fitur": [
+        { "fitur": "Rating & ulasan produk", "tabel": "ulasans", "database_db": "ulasans (produk_id, user_id, rating 1-5, komentar). UNIQUE(produk_id+user_id) = 1 user 1 ulasan/produk." },
+        { "fitur": "Favorit / wishlist warga", "tabel": "favorits", "database_db": "favorits (user_id, produk_id). UNIQUE cegah dobel favorit." },
+        { "fitur": "Dashboard statistik toko", "tabel": "pesanans, pesanan_items, produks", "database_db": "menghitung produk terlaris & jumlah pesanan per toko." },
+        { "fitur": "Laporan penjualan (export PDF)", "tabel": "pesanans, pesanan_items", "database_db": "SQL JOIN tokos+pesanan+item untuk total/pendapatan per periode." }
+      ]
+    }
+  ],
+  "ringkasan_tabel_database": [
+    { "tabel": "users", "deskripsi": "Akun semua pengguna (admin, pemilik_toko, warga). Kolom role menentukan hak akses.", "relasi": ["1-1 tokos (pemilik_toko)", "1-* keranjangs", "1-* pesanans", "1-* ulasans", "1-* favorits"] },
+    { "tabel": "tokos", "deskripsi": "Profil toko. status pending disembunyikan sampai di-approve admin.", "relasi": ["*-1 users", "1-* produks", "1-* keranjangs", "1-* pesanans"] },
+    { "tabel": "kategoris", "deskripsi": "Kategori produk, dikelola admin.", "relasi": ["1-* produks"] },
+    { "tabel": "produks", "deskripsi": "Produk milik toko, terhubung ke kategori.", "relasi": ["*-1 tokos", "*-1 kategoris", "1-* keranjangs", "1-* pesanan_items", "1-* ulasans", "1-* favorits"] },
+    { "tabel": "keranjangs", "deskripsi": "Isi keranjang warga.", "relasi": ["*-1 users", "*-1 produks"] },
+    { "tabel": "pesanans", "deskripsi": "Header pesanan warga ke toko.", "relasi": ["*-1 users", "*-1 tokos", "1-* pesanan_items"] },
+    { "tabel": "pesanan_items", "deskripsi": "Detail produk tiap pesanan (snapshot nama+harga).", "relasi": ["*-1 pesanans", "*-1 produks"] },
+    { "tabel": "ulasans", "deskripsi": "Rating (1-5) & komentar warga ke produk (opsional).", "relasi": ["*-1 produks", "*-1 users"] },
+    { "tabel": "favorits", "deskripsi": "Wishlist produk favorit warga (opsional).", "relasi": ["*-1 users", "*-1 produks"] }
+  ],
+  "alur_transaksi_utama": {
+    "warga_mencari_produk": ["Beranda", "Katalog/Search", "Detail Produk", "Tambah keranjang", "Checkout", "Pesanan tersimpan di pesanans"],
+    "pemilik_terima_pesanan": ["Dashboard Toko", "Lihat pesanan pending", "Confirm/Reject", "status pesanans diubah", "stok dikurangi"],
+    "registrasi_toko": ["Register (Pemilik Usaha)", "Toko status pending", "Admin approve/reject", "Toko muncul di katalog setelah approved"]
+  }
+}
